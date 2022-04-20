@@ -27,11 +27,12 @@
                     {{ $header }}
                 </div>
             </header> --}}
-
+            @include('layouts.body')
             <!-- Page Content -->
             <main>
                 {{ $slot }}
             </main>
+            @include('layouts.footer')
         </div>
     </body>
 </html>

@@ -2,7 +2,7 @@
     <x-auth-card>
         <x-slot name="logo">
 
-            <a href="#" class="text-lg font-semibold tracking-widest text-gray-900 uppercase rounded-lg dark-mode:text-white focus:outline-none focus:shadow-outline">Flowtrail UI</a>
+            <a href="{{ route('login') }}" class="text-lg font-semibold tracking-widest text-gray-900 uppercase rounded-lg dark-mode:text-white focus:outline-none focus:shadow-outline">login </a>
         </x-slot>
 
         <!-- Session Status -->
