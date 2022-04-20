@@ -16,15 +16,17 @@ return new class extends Migration
         Schema::create('offers', function (Blueprint $table) {
             $table->id();
             $table->string('OfferTitle');
-            $table->string('Departement');
-            $table->boolean('Remote')->default(true);
-            $table->string('EploymentType');
+            $table->string('CompanyName');
+            $table->enum('Remote', ['Remote', 'No Remote']);
+            $table->text('OfferDescription');
+            $table->string('TimeWork');
             $table->string('SalaryRange');
             $table->text('Requirement');
             $table->string('Image');
             $table->text('WhoWeAre');
-            // $table->integer('UserId');
-            // $table->foreign('UserId')->references('id')->on('users');
+            $table->string('County');
+            $table->string('City');
+            $table->string('Experience');
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
