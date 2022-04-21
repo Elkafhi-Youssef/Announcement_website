@@ -17,7 +17,7 @@ class OfferController extends Controller
         // join with offers table and users table
         $offers = Offer::join('users', 'offers.user_id', '=', 'users.id')
             ->select('offers.*', 'users.name')
-            ->latest()->get();
+            ->latest()->paginate(2);
         return view('dashboard', ['offers' => $offers]);
 
         dd($offers);
@@ -67,6 +67,14 @@ class OfferController extends Controller
         $offer->City = $request->input('City');
         $offer->Experience = $request->input('Experience');
         $offer->user_id = auth()->user()->id;
+        if($request->hasfile('Image'))
+        {
+            $file = $request->file('Image');
+            $extention = $file->getClientOriginalExtension();
+            $filename = time().'.'.$extention;
+            $file->move('uploads/companyImage/', $filename);
+            $offer->Image = $filename;
+        }
 
         $offer->save();
         // return  redirect('/dashboard')->back()->with('status','Student Added Successfully');
@@ -126,41 +134,67 @@ class OfferController extends Controller
             'City' => 'required',
             'Experience' => 'required'
         ]);
+            $offer = Offer::find($offer->id);
+            $offer->OfferTitle = $request->input('OfferTitle');
+            $offer->CompanyName = $request->input('CompanyName');
+            $offer->Remote	 = $request->input('Remote');
+            $offer->OfferDescription = $request->input('OfferDescription');
+            $offer->TimeWork = $request->input('TimeWork');
+            $offer->SalaryRange = $request->input('SalaryRange');
+            $offer->Requirement = $request->input('Requirement');
+            // $offer->Image = $request->input('Image');
+            $offer->WhoWeAre = $request->input('WhoWeAre');
+            $offer->County = $request->input('County');
+            $offer->City = $request->input('City');
+            $offer->Experience = $request->input('Experience');
+            if($request->hasfile('Image'))
+            {
+                $destination = 'uploads/companyImage/'.$offer->Image;
+            //     if($f::exists($destination))
+            // {
+            //     File::delete($destination);
+            // }
+                if(file_exists($destination))
+                {
 
-        $offer->update([
-            'OfferTitle' => $request->OfferTitle,
-            'CompanyName' => $request->CompanyName,
-            'Remote' => $request->Remote,
-            'OfferDescription' => $request->OfferDescription,
-            'TimeWork' => $request->TimeWork,
-            'SalaryRange' => $request->SalaryRange,
-            'Requirement' => $request->Requirement,
-            'Image' => $request->Image,
-            'WhoWeAre' => $request->WhoWeAre,
-            'County' => $request->County,
-            'City' => $request->City,
-            'Experience' => $request->Experience
+                    unlink($destination);
+                }
+                $file = $request->file('Image');
+                $extention = $file->getClientOriginalExtension();
+                $filename = time().'.'.$extention;
+                $file->move('uploads/companyImage/', $filename);
+                $offer->Image = $filename;
 
+                        // if(File::exists($destination))
+                // {
+                //     File::delete($destination);
+                // }
+                // $file = $request->file('profile_image');
+                // $extention = $file->getClientOriginalExtension();
+                // $filename = time().'.'.$extention;
+                // $file->move('uploads/companyImage/', $filename);
+                // $offer->Image = $filename;
+            }
+            $offer->update();
+        // $offer->update([
+        //     'OfferTitle' => $request->OfferTitle,
+        //     'CompanyName' => $request->CompanyName,
+        //     'Remote' => $request->Remote,
+        //     'OfferDescription' => $request->OfferDescription,
+        //     'TimeWork' => $request->TimeWork,
+        //     'SalaryRange' => $request->SalaryRange,
+        //     'Requirement' => $request->Requirement,
+        //     'Image' => $request->Image,
+        //     'WhoWeAre' => $request->WhoWeAre,
+        //     'County' => $request->County,
+        //     'City' => $request->City,
+        //     'Experience' => $request->Experience,
+        //     'Image' => $request->Image
+        // ]);
 
-        ]);
-        // $offer = new Offer;
-        // $offer->OfferTitle = $request->input('OfferTitle');
-        // $offer->CompanyName = $request->input('CompanyName');
-        // $offer->Remote	 = $request->input('Remote');
-        // $offer->OfferDescription = $request->input('OfferDescription');
-        // $offer->TimeWork = $request->input('TimeWork');
-        // $offer->SalaryRange = $request->input('SalaryRange');
-        // $offer->Requirement = $request->input('Requirement');
-        // $offer->Image = $request->input('Image');
-        // $offer->WhoWeAre = $request->input('WhoWeAre');
-        // $offer->County = $request->input('County');
-        // $offer->City = $request->input('City');
-        // $offer->Experience = $request->input('Experience');
-        // $offer->save();
-        // dd($offer);
 
         return redirect()->route('dashboard')
-                    ->with('success','User updated successfully.');
+                    ->with('status','User updated successfully.');
     }
 
     /**
@@ -171,6 +205,8 @@ class OfferController extends Controller
      */
     public function destroy(Offer $offer)
     {
-        //
+        $offer->delete();
+        return redirect()->route('dashboard')
+                        ->with('status','User deleted successfully');
     }
 }
