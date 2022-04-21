@@ -29,7 +29,7 @@
         </div>
 
     @endif
-        <section class=" h-52 jobs-banner defaults  flex justify-center items-center text-6xl font-bold text-white"  style="background-image: url('https://cms.jibecdn.com/prod/indeed/assets/JOBS-BANNER-BG-IMG-en-us-1634642573815.svg');">
+        <section class=" h-52 mb-28 jobs-banner defaults  flex justify-center items-center text-6xl font-bold text-white"  style="background-image: url('https://cms.jibecdn.com/prod/indeed/assets/JOBS-BANNER-BG-IMG-en-us-1634642573815.svg');">
             <div class="jobs-banner_content">
               <h1 >
                 Available jobs
@@ -37,7 +37,7 @@
             </div>
          </section>
         <div
-            class=" max-w-2xl   mx-auto bg-white h-20 absolute top-40 left-2/4 -translate-x-1/2 ml-3  rounded-xl px-4  flex flex-col justify-center sm:flex-row sm:items-center md:justify-between shadow-lg">
+            class=" max-w-2xl mb-14  mx-auto bg-white h-32 sm:20 absolute top-40 left-2/4 -translate-x-1/2 ml-3  rounded-xl px-4  flex flex-col justify-center sm:flex-row sm:items-center md:justify-between shadow-lg">
             <div class=" flex flex-row justify-center h-12">
 
                 <div
@@ -56,10 +56,10 @@
                     </button>
                 </div>
             </div>
-            <div class="   flex justify-center h-12 ">
+            <div class=" mt-3 sm:mt-0 flex justify-center h-12 ">
 
                 <button
-                    class="px-4 py-2 mx-4 font-medium tracking-wide text-white capitalize transition-colors duration-200 transform bg-sky-500 rounded-md hover:bg-sky-600 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-80">
+                    class="px-4 py-2 mx-4 w-fit font-medium tracking-wide text-white capitalize transition-colors duration-200 transform bg-sky-500 rounded-md hover:bg-sky-600 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-80">
                     <a href="{{ route('offers.create') }}">
                         Add Offer
                     </a>
@@ -76,18 +76,18 @@
             </div>
         </div>
 
+
+
         @foreach ($offers as $item)
-
-
         <div
-            class=" border-l-4 mt-14 border-sky-700  flex-col max-w-2xl mx-auto overflow-hidden bg-white rounded-lg shadow-md dark:bg-gray-800">
-            <div class="flex  relative">
+        class="   border-l-4 mt-14  border-sky-700  flex-col max-w-2xl mx-auto overflow-hidden bg-white rounded-lg shadow-md dark:bg-gray-800">
+            <div class="flex    mb-4 flex-wrap-reverse  sm:flex-nowrap relative justify-center">
                 <!-- component -->
-                <div class="p-6">
+                <div class="p-6 w-full sm:w-3/4">
                     @if ($item['user_id'] == auth()->user()->id)
 
                     <div class="  absolute top-0 left-0    ">
-                        <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
+                        {{-- <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script> --}}
                         <div @click.away="open = false" class="relative" x-data="{ open: false }">
                             <button @click="open = !open" class="flex flex-row items-center w-40 px-4 py-2 mt-2 text-sm font-semibold text-left bg-transparent rounded-lg dark-mode:bg-transparent dark-mode:focus:text-white dark-mode:hover:text-white dark-mode:focus:bg-gray-600 dark-mode:hover:bg-gray-600 md:block hover:text-gray-900 focus:text-gray-900 focus:outline-none focus:shadow-outline">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 20 20" fill="currentColor">
@@ -97,18 +97,34 @@
                             <div x-show="open" x-transition:enter="transition ease-out duration-100" x-transition:enter-start="transform opacity-0 scale-95" x-transition:enter-end="transform opacity-100 scale-100" x-transition:leave="transition ease-in duration-75" x-transition:leave-start="transform opacity-100 scale-100" x-transition:leave-end="transform opacity-0 scale-95" class="absolute right-0 w-full mt-2 origin-top-right rounded-md shadow-lg z-40">
                               <div class="px-2 py-2 bg-white rounded-md shadow dark-mode:bg-gray-800">
                                 <a class="block px-4 py-2 mt-2 text-sm font-semibold bg-transparent rounded-lg dark-mode:bg-transparent dark-mode:hover:bg-gray-600 dark-mode:focus:bg-gray-600 dark-mode:focus:text-white dark-mode:hover:text-white dark-mode:text-gray-200 md:mt-0 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline" href="{{ route('offers.edit',  $item['id']) }}">Edit{{ $item['id']}}</a>
-                                <a class="block px-4 py-2 mt-2 text-sm font-semibold bg-transparent rounded-lg dark-mode:bg-transparent dark-mode:hover:bg-gray-600 dark-mode:focus:bg-gray-600 dark-mode:focus:text-white dark-mode:hover:text-white dark-mode:text-gray-200 md:mt-0 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline" href="#">delete</a>
-
+                                <div @click.away="show = false" class="relative" x-data="{ show: false }">
+                                <a @click="show = !show " class="block px-4 py-2 mt-2 text-sm font-semibold bg-transparent rounded-lg dark-mode:bg-transparent dark-mode:hover:bg-gray-600 dark-mode:focus:bg-gray-600 dark-mode:focus:text-white dark-mode:hover:text-white dark-mode:text-gray-200 md:mt-0 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline" href="#">delete</a>
+                                <div x-show="show" x-transition:enter="transition ease-out          duration-100" x-transition:enter-start="transform opacity-0 scale-95" x-transition:enter-end="transform opacity-100 scale-100" x-transition:leave="transition ease-in duration-75" x-transition:leave-start="transform opacity-100 scale-100" x-transition:leave-end="transform opacity-0 scale-95" class="  absolute  -top-8 left-40  mt-2 origin-top-right rounded-md w-96 z-50 bg-white shadow-xl h-24">
+                                    <div @click="show = !show">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                                          </svg>
+                                    </div >
+                                    <form action="{{route('offers.destroy',$item['id'])}}" method="post">
+                                        <h1 class=" text-center w-full">Are you sure you want to delete</h1>
+                                       <div class=" flex float-right">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-xl">
+                                                Delete
+                                            </button>
+                                       </div>
+                                    </form>
+                                </div>
+                                </div>
                               </div>
                             </div>
                           </div>
-
                     </div>
                     @endif
 
                     <div class=" mt-3">
-                        {{-- <span class="text-xs font-medium text-blue-600 uppercase dark:text-blue-400">Product</span>
-                        --}}
+
                         <span class="mx-1 text-xs text-gray-600 dark:text-gray-300">21 SEP 2015</span>
                         <div class=" flex-row">
                             <a href="{{ route('offers.show', ['offer' => $item['id']]) }}"
@@ -123,7 +139,7 @@
                             <h2 class=" mx-4 ml-2 text-sm font-semibold">{{$item['TimeWork']}}</h2>
 
                         </div>
-                        <p class="mt-2 text-sm text-gray-600 dark:text-gray-400">{{$item['OfferDescription']}}
+                        <p class="mt-2 text-sm   text-gray-600 dark:text-gray-400">{{$item['OfferDescription']}}
                         </p>
                     </div>
 
@@ -147,22 +163,22 @@
                         </div>
                     </div>
                 </div>
-                <img class="object-cover w-1/5 h-40"
-                    src="https://images.unsplash.com/photo-1550439062-609e1531270e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60"
+                <img class="object-cover  sm:w-1/4 md:w-1/4 sm:float-right md:float-right  h-40"
+
+                    src="{{ asset('uploads/companyImage/'.$item['Image'] ) }}"
                     alt="Article">
 
 
             </div>
-            {{-- <div class=" w-full h-16 pl-3 flex">
-                <h2 class=" mx-4 text-lg font-semibold">Remot</h2>
-                <h2 class=" mx-4 text-lg font-semibold">Full time</h2>
 
-            </div> --}}
 
 
         </div>
         @endforeach
+        <div class=" mt-2">
 
+            {{ $offers->links() }}
+        </div>
 
 
     </section>

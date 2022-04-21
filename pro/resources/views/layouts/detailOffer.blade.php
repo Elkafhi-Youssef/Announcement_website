@@ -43,7 +43,7 @@
                     </div>
                     <div class="  ml-14 w-56  ">
                         <img class="object-cover b h-full"
-                        src="https://images.unsplash.com/photo-1550439062-609e1531270e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60"
+                        src="{{ asset('uploads/companyImage/'.$offer['Image'] ) }}"
                         alt="Article">
                     </div>
             </div>
