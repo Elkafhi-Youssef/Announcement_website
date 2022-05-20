@@ -25,7 +25,7 @@
                         <!-- <span class=" text-sm  text-black-600 dark:text-gray-300"> {{$offer['created_at']->format('d M Y')}}</span> -->
                         <div class=" flex-row">
                             <h3
-                                class="block mt-2 text-2xl font-semibold text-gray-800 transition-colors duration-200 transform dark:text-white hover:text-gray-600 ">Looking
+                                class="block mt-2 text-2xl font-semibold text-gray-800 transition-colors duration-200 transform  ">Looking
                                {{$offer['OfferTitle']}}</h3>
 
                         </div>
@@ -37,7 +37,8 @@
                         <button class=" mt-3 flex items-center justify-center  px-2 py-1 text-white transition-colors duration-200 transform  bg-sky-400 hover:bg-sky-600 rounded-md focus:outline-none sm:w-auto sm:mx-1   focus:ring  focus:ring-opacity-40">
 
                             <span class="mx-1">
-                                respond
+
+                                <a  href="mailto:{{ Auth::user()->email }}">respond</a>
                             </span>
                         </button>
                     </div>

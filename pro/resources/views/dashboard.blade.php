@@ -40,35 +40,42 @@
             class=" max-w-2xl mb-14  mx-auto bg-white h-32 sm:20 absolute top-40 left-2/4 -translate-x-1/2 ml-3  rounded-xl px-4  flex flex-col justify-center sm:flex-row sm:items-center md:justify-between shadow-lg">
             <div class=" flex flex-row justify-center h-12">
 
+                <form  action="{{ route('offers.search') }}" method="GET">
                 <div
                     class="  w-80 flex appearance-none border-2 border-sky-500 rounded-xl p-1   mt-0 sm:max-w-screen-sm text-stone-900">
-                    <input type="text"
+                        <input  type="text"
+                        name="search"
+
                         class="bg-transparent px-4 py-2 w-64 border-none focus:border-none focus:outline-none "
                         placeholder="Search for ...">
-                    <button class="flex items-center justify-center px-5">
-                        <a href="{{ route('login') }}">
-                            <svg class="w-6 h-6" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                                <path
-                                d="M16.32 14.9l5.39 5.4a1 1 0 0 1-1.42 1.4l-5.38-5.38a8 8 0 1 1 1.41-1.41zM10 16a6 6 0 1 0 0-12 6 6 0 0 0 0 12z">
-                            </path>
-                        </svg>
-                    </a>
-                    </button>
-                </div>
+                        <button class="flex items-center justify-center px-5" type="submit">
+                                <svg class="w-6 h-6" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                    <path
+                                    d="M16.32 14.9l5.39 5.4a1 1 0 0 1-1.42 1.4l-5.38-5.38a8 8 0 1 1 1.41-1.41zM10 16a6 6 0 1 0 0-12 6 6 0 0 0 0 12z">
+                                </path>
+                            </svg>
+                        </button>
+
+                    </div>
+                </form>
+                {{-- <form action="{{ route('offers.search') }}" method="GET">
+                    <input type="text" name="search" required/>
+                    <button type="submit">Search</button>
+                </form> --}}
+
             </div>
             <div class=" mt-3 sm:mt-0 flex justify-center h-12 ">
-
                 <button
-                    class="px-4 py-2 mx-4 w-fit font-medium tracking-wide text-white capitalize transition-colors duration-200 transform bg-sky-500 rounded-md hover:bg-sky-600 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-80">
-                    <a href="{{ route('offers.create') }}">
+                    class="px-2 py-1 mx-4 w-fit font-medium tracking-wide text-white capitalize transition-colors duration-200 transform bg-sky-500 rounded-md hover:bg-sky-600 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-80">
+                    <a class=" text-sm" href="{{ route('offers.create') }}">
                         Add Offer
                     </a>
                 </button>
 
                 <button
-                    class="px-4 py-2 font-medium tracking-wide text-white capitalize transition-colors duration-200 transform bg-sky-500 rounded-md hover:bg-sky-600 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-80">
+                    class="px-2 py-1 font-medium tracking-wide text-white capitalize transition-colors duration-200 transform bg-sky-500 rounded-md hover:bg-sky-600 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-80">
 
-                    <a href="#">
+                    <a class=" text-sm" href="#">
 
                         Add Reuest
                     </a>
@@ -80,7 +87,7 @@
 
         @foreach ($offers as $item)
         <div
-        class="   border-l-4 mt-14  border-sky-700  flex-col max-w-2xl mx-auto overflow-hidden bg-white rounded-lg shadow-md dark:bg-gray-800">
+        class="   border-l-4 mt-14  border-sky-700  flex-col max-w-2xl mx-auto overflow-hidden bg-white rounded-lg shadow-md ">
             <div class="flex    mb-4 flex-wrap-reverse  sm:flex-nowrap relative justify-center">
                 <!-- component -->
                 <div class="p-6 w-full sm:w-3/4">
@@ -125,11 +132,11 @@
 
                     <div class=" mt-3">
 
-                        <span class="mx-1 text-xs text-gray-600 dark:text-gray-300">21 SEP 2015</span>
+                        <span class="mx-1 text-xs text-gray-600 ">21 SEP 2015</span>
                         <div class=" flex-row">
                             <a href="{{ route('offers.show', ['offer' => $item['id']]) }}"
 
-                                class="block mt-2 text-2xl font-semibold text-gray-800 transition-colors duration-200 transform dark:text-white hover:text-gray-600 hover:underline">{{$item['OfferTitle']}}</a>
+                                class="block mt-2 text-2xl font-semibold text-gray-800 transition-colors duration-200 transform   hover:underline">{{$item['OfferTitle']}}</a>
 
                         </div>
                         <h2 class=" mx-4 ml-2 mt-3 text-base font-semibold">Salary Range:{{$item['SalaryRange']}}</h2>

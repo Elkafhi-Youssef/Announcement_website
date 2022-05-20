@@ -17,7 +17,7 @@
 <div class="mt-10 sm:mt-0 ">
     <!-- 3 -->
       <div class="mt-5 md:mt-0 md:col-span-2 ">
-        <form action="{{ route('offers.update', $offer['id'] )}}" method="POST">
+        <form action="{{ route('offers.update', $offer['id'] )}}" method="POST" enctype="multipart/form-data">
             @csrf
             @method('PUT')
           <div class="shadow overflow-hidden sm:rounded-md ">
@@ -53,24 +53,25 @@
 
                   <div class="flex justify-center">
                     <div class=" w-full">
-                      <label for="Image" class="block text-sm font-medium text-gray-700">Image</label>
-                      <input value="{{$offer['Image']}}" class="form-control
-                      block
-                      w-full
-                      px-3
-                      py-1.5
-                      text-base
-                      font-normal
-                      text-gray-700
-                      bg-white bg-clip-padding
-                      border border-solid border-gray-300
-                      rounded
-                      transition
-                      ease-in-out
-                      m-0
-                      focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" type="file" id="Image" name="Image" multiple>
+                        <label for="Image" class="block text-sm font-medium text-gray-700">Image</label>
+                        <input class="form-control
+                    block
+                    w-full
+                    px-3
+                    py-1.5
+                    text-base
+                    font-normal
+                    text-gray-700
+                    bg-white bg-clip-padding
+                    border border-solid border-gray-300
+                    rounded
+                    transition
+                    ease-in-out
+                    m-0
+                    focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" type="file"
+                    id="Image" name="Image" multiple>
                     </div>
-                  </div>
+                </div>
                   <div class="">
                     <label for="County" class="block text-sm font-medium text-gray-700">Country</label>
                     <input type="text" value="{{$offer['County']}}" name="County" id="County" placeholder="County of company" autocomplete="given-name" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm placeholder:text-xs border-gray-300 rounded-md">
