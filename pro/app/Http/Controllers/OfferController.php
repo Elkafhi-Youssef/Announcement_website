@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Offer;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 
 class OfferController extends Controller
 {
@@ -12,15 +13,28 @@ class OfferController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        // join with offers table and users table
+        // $offers = Offer::where('OfferTitle','like','%'.$request->search.'%')->latest()->paginate(4);
         $offers = Offer::join('users', 'offers.user_id', '=', 'users.id')
             ->select('offers.*', 'users.name')
-            ->latest()->paginate(2);
+            ->latest()->paginate(4);
+
         return view('dashboard', ['offers' => $offers]);
 
-        dd($offers);
+    }
+    public function search(Request $request){
+        // Get the search value from the request
+        $search = $request->input('search');
+
+        // Search in the title and body columns from the posts table
+        $offers = Offer::query()
+            ->where('OfferTitle', 'LIKE', "%{$search}%")
+            // ->orWhere('body', 'LIKE', "%{$search}%")
+            ->latest()->paginate(4);
+
+        // Return the search view with the resluts compacted
+        return view('dashboard', compact('offers'));
     }
     public function home()
     {
@@ -61,14 +75,14 @@ class OfferController extends Controller
         $offer->TimeWork = $request->input('TimeWork');
         $offer->SalaryRange = $request->input('SalaryRange');
         $offer->Requirement = $request->input('Requirement');
-        $offer->Image = $request->input('Image');
         $offer->WhoWeAre = $request->input('WhoWeAre');
         $offer->County = $request->input('County');
         $offer->City = $request->input('City');
         $offer->Experience = $request->input('Experience');
         $offer->user_id = auth()->user()->id;
-        if($request->hasfile('Image'))
+        if($request->file('Image'))
         {
+
             $file = $request->file('Image');
             $extention = $file->getClientOriginalExtension();
             $filename = time().'.'.$extention;
@@ -76,10 +90,9 @@ class OfferController extends Controller
             $offer->Image = $filename;
         }
 
-        $offer->save();
-        // return  redirect('/dashboard')->back()->with('status','Student Added Successfully');
-        return redirect()->route('dashboard')->with('status','Offer Added Successfully');
 
+        $offer->save();
+        return redirect()->route('dashboard')->with('status','Offer Added Successfully');
     // dd($offer);
     }
 
@@ -118,9 +131,6 @@ class OfferController extends Controller
      */
     public function update(Request $request, Offer $offer)
     {
-        // $offer->update($request->all());
-
-        // return redirect()->route('dashboard')->with('success','Post updated successfully');
         $request->validate([
             'OfferTitle' => 'required',
             'CompanyName' => 'required',
@@ -132,69 +142,32 @@ class OfferController extends Controller
             'WhoWeAre' => 'required',
             'County' => 'required',
             'City' => 'required',
-            'Experience' => 'required'
+            'Experience' => 'required',
+            'Image' => 'required'
         ]);
             $offer = Offer::find($offer->id);
             $offer->OfferTitle = $request->input('OfferTitle');
             $offer->CompanyName = $request->input('CompanyName');
-            $offer->Remote	 = $request->input('Remote');
+            $offer->Remote = $request->input('Remote');
             $offer->OfferDescription = $request->input('OfferDescription');
             $offer->TimeWork = $request->input('TimeWork');
             $offer->SalaryRange = $request->input('SalaryRange');
             $offer->Requirement = $request->input('Requirement');
-            // $offer->Image = $request->input('Image');
             $offer->WhoWeAre = $request->input('WhoWeAre');
             $offer->County = $request->input('County');
             $offer->City = $request->input('City');
             $offer->Experience = $request->input('Experience');
-            if($request->hasfile('Image'))
-            {
-                $destination = 'uploads/companyImage/'.$offer->Image;
-            //     if($f::exists($destination))
-            // {
-            //     File::delete($destination);
-            // }
-                if(file_exists($destination))
-                {
-
-                    unlink($destination);
-                }
-                $file = $request->file('Image');
-                $extention = $file->getClientOriginalExtension();
-                $filename = time().'.'.$extention;
-                $file->move('uploads/companyImage/', $filename);
-                $offer->Image = $filename;
-
-                        // if(File::exists($destination))
-                // {
-                //     File::delete($destination);
-                // }
-                // $file = $request->file('profile_image');
-                // $extention = $file->getClientOriginalExtension();
-                // $filename = time().'.'.$extention;
-                // $file->move('uploads/companyImage/', $filename);
-                // $offer->Image = $filename;
-            }
+        if($request->file('Image')->isValid()){
+            $file = $request->file('Image');
+            $extention = $file->getClientOriginalExtension();
+            $filename = time().'.'.$extention;
+            $file->move('uploads/companyImage/', $filename);
+            $offer->Image = $filename;
+        }
             $offer->update();
-        // $offer->update([
-        //     'OfferTitle' => $request->OfferTitle,
-        //     'CompanyName' => $request->CompanyName,
-        //     'Remote' => $request->Remote,
-        //     'OfferDescription' => $request->OfferDescription,
-        //     'TimeWork' => $request->TimeWork,
-        //     'SalaryRange' => $request->SalaryRange,
-        //     'Requirement' => $request->Requirement,
-        //     'Image' => $request->Image,
-        //     'WhoWeAre' => $request->WhoWeAre,
-        //     'County' => $request->County,
-        //     'City' => $request->City,
-        //     'Experience' => $request->Experience,
-        //     'Image' => $request->Image
-        // ]);
 
-
-        return redirect()->route('dashboard')
-                    ->with('status','User updated successfully.');
+            return redirect()->route('dashboard')
+            ->with('status','Offer updated successfully.');
     }
 
     /**
@@ -207,6 +180,6 @@ class OfferController extends Controller
     {
         $offer->delete();
         return redirect()->route('dashboard')
-                        ->with('status','User deleted successfully');
+        ->with('status','User deleted successfully');
     }
 }
