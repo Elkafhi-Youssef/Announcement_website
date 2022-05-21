@@ -23,6 +23,19 @@ class DemandeController extends Controller
     return view('layouts.demandes', ['demandes' => $demandes]);
         //
     }
+    public function search(Request $request){
+        // Get the search value from the request
+        $search = $request->input('search');
+
+        // Search in the title and body columns from the posts table
+        $demandes = Demade::query()
+            ->where('OfferTitle', 'LIKE', "%{$search}%")
+            // ->orWhere('body', 'LIKE', "%{$search}%")
+            ->latest()->paginate(4);
+
+        // Return the search view with the resluts compacted
+        return view('dashboard', compact('demandes'));
+    }
 
     /**
      * Show the form for creating a new resource.
