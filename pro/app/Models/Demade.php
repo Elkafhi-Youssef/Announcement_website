@@ -9,5 +9,8 @@ class Demade extends Model
 {
     use HasFactory;
     protected $fillable = ['Age', 'Job', 'Skills', 'Country','City','Biographie','user_id'];
+    public function user() {
+        return $this->belongsTo(User::class, 'user_id');
+    }
 
 }

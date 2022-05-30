@@ -84,13 +84,14 @@
         </div>
 
 
-
         @foreach ($offers as $item)
         <div
         class="   border-l-4 mt-14  border-sky-700  flex-col max-w-2xl mx-auto overflow-hidden bg-white rounded-lg shadow-md ">
+                {{$item['user']['name']}}
             <div class="flex    mb-4 flex-wrap-reverse  sm:flex-nowrap relative justify-center">
                 <!-- component -->
                 <div class="p-6 w-full sm:w-3/4">
+                    {{-- {{$item.['user'].['name']}} --}}
                     @if ($item['user_id'] == auth()->user()->id)
 
                     <div class="  absolute top-0 left-0    ">
@@ -184,7 +185,7 @@
         @endforeach
         <div class=" mt-2">
 
-            {{ $offers->links() }}
+            {{-- {{ $offers->links() }} --}}
         </div>
 
 
@@ -194,6 +195,6 @@
 
     {{-- @include('layouts.detailOffer') --}}
     @include('layouts.footer')
-</body>
 
+</body>
 </html>

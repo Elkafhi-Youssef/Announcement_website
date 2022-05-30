@@ -16,10 +16,12 @@ class OfferController extends Controller
     public function index(Request $request)
     {
         // $offers = Offer::where('OfferTitle','like','%'.$request->search.'%')->latest()->paginate(4);
-        $offers = Offer::join('users', 'offers.user_id', '=', 'users.id')
-            ->select('offers.*', 'users.name')
-            ->latest()->paginate(4);
+        // $offers = Offer::join('users', 'offers.user_id', '=', 'users.id')
+        //     ->select('offers.*', 'users.name')
+        //     ->latest()->paginate(4);
 
+
+        $offers =  Offer::with('user')->get();
         return view('dashboard', ['offers' => $offers]);
 
     }
@@ -39,12 +41,13 @@ class OfferController extends Controller
     public function home()
     {
         // join with offers table and users table
-        $offers = Offer::join('users', 'offers.user_id', '=', 'users.id')
-            ->select('offers.*', 'users.name')
-            ->latest()->get();
+        // $offers = Offer::join('users', 'offers.user_id', '=', 'users.id')
+        //     ->select('offers.*', 'users.name')
+        //     ->latest()->get();
+        $offers = Offer::latest();
+        // dd($offers);
         return view('welcome', ['offers' => $offers]);
 
-        dd($offers);
     }
 
     /**

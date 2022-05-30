@@ -83,6 +83,7 @@
         @foreach ($demandes as $item)
         <div
         class="   border-l-4 mt-14  border-sky-700  flex-col max-w-2xl mx-auto overflow-hidden bg-white rounded-lg shadow-md ">
+        {{$item['user']['name']}}
             <div class="flex    mb-4 flex-wrap-reverse  sm:flex-nowrap relative justify-center">
                 <!-- component -->
                 <div class="p-6 w-full sm:w-3/4">
@@ -176,7 +177,7 @@
         @endforeach
         <div class=" mt-2">
 
-            {{ $demandes->links() }}
+
         </div>
 
 

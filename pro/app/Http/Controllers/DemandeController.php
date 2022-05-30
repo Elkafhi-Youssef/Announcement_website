@@ -16,12 +16,13 @@ class DemandeController extends Controller
     {
         // $demades = demade::latest()->paginate(4);
         // return view('layouts.demades',  ['demades' => $demades]);
-        $demandes = Demade::join('users', 'demades.user_id', '=', 'users.id')
-        ->select('demades.*', 'users.name')
-        ->latest()->paginate(4);
+    //     $demandes = Demade::join('users', 'demades.user_id', '=', 'users.id')
+    //     ->select('demades.*', 'users.name')
+    //     ->latest()->paginate(4);
 
-    return view('layouts.demandes', ['demandes' => $demandes]);
-        //
+    // return view('layouts.demandes', ['demandes' => $demandes]);
+    $demandes = Demade::with('user')->get();
+        return view('layouts.demandes', ['demandes' => $demandes]);
     }
     public function search(Request $request){
         // Get the search value from the request
